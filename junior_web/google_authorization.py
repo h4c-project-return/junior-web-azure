@@ -12,6 +12,16 @@ def build_auth_context(client_secret_filename, scope_uri, redirect_uri, user_age
     return flow
 
 
+def build_auth_context_raw(client_id, client_secret, scope_uri, redirect_uri, user_agent):
+    flow = client.OAuth2WebServerFlow(
+        client_id=client_id,
+        client_secret=client_secret,
+        scope = scope_uri,
+        redirect_uri = redirect_uri)
+    flow.user_agent = user_agent
+    return flow
+
+
 def build_auth_uri(context):
     return context.step1_get_authorize_url()
 
