@@ -1,4 +1,4 @@
-from flask import Flask, url_for, json, make_response, request, session, redirect
+from flask import Flask, url_for, json, make_response, request, session, redirect, abort
 from flask_cors import CORS
 from google_authorization import *
 from google_sheets import get_sheet_values
@@ -66,10 +66,14 @@ app.secret_key = str(uuid.uuid4())
 CORS(app)
 
 
+def auth_is_ready():
+    return (SESSION_CREDENTIALS_KEY in session
+        and credentials_are_current(session[SESSION_CREDENTIALS_KEY]))
+
+
 @app.route('/', methods=['GET'])
 def root():
-    if (SESSION_CREDENTIALS_KEY not in session
-        or not credentials_are_current(session[SESSION_CREDENTIALS_KEY])):
+    if not auth_is_ready():
         return redirect(url_for('login'))
     else:
         return "Authenticated!"
@@ -92,8 +96,14 @@ def login():
         return redirect(url_for('root'))
 
 
+def require_auth():
+    if not auth_is_ready():
+        abort(401)
+
+
 @app.route('/opportunities', methods=['GET'])
 def api_opportunities():
+    require_auth()
     resp = make_response(build_json_response_success(
         list(get_all_opportunities()),
         None,
@@ -108,6 +118,7 @@ def api_opportunities():
 # "industries":["Building Construction/Skilled Trade"],"abilities":['Standing for 8hrs',
 # '_Heavy Lifting', 'capable with tools and machinery', 'Attention to Detail']}
 def api_opportunities_search():
+    require_auth()
     resp = make_response(build_json_response_success(
         list(filter_opportunities(request.json, get_all_opportunities())),
         request.data,
@@ -119,6 +130,7 @@ def api_opportunities_search():
 
 @app.route('/opportunities/criteria', methods=['GET'])
 def api_opportunities_criteria():
+    require_auth()
     resp = make_response(build_json_response_success(
         get_opportunities_criteria(get_opportunities_sheet()),
         None,
