@@ -1,0 +1,87 @@
+h3 {
+  font-size: 30px; }
+
+* {
+  box-sizing: border-box; }
+
+html, body {
+  background-color: #333366;
+  font-family: "Open Sans", sans-serif; }
+
+.btn {
+  margin-top: 32px;
+  width: 320px;
+  padding: 16px 10px;
+  text-align: center;
+  border: none;
+  border-radius: 10px;
+  font-size: 24px;
+  cursor: pointer; }
+
+.btn--center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto; }
+
+.btn--primary {
+  background-color: #FFCD32;
+  color: white; }
+
+.u-text-center {
+  text-align: center; }
+
+.formCard {
+  background-color: white;
+  border-radius: 5px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 36px 72px;
+  max-width: 800px;
+  margin-top: 32px;
+  min-height: 500px; }
+
+.formCard .btn.btn--primary {
+  position: absolute;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%); }
+
+.formCard-boolGroup {
+  width: 270px;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex; }
+
+.formCard-boolGroup label {
+  flex: 0 1 135px;
+  margin-top: 32px;
+  display: block;
+  text-align: center; }
+
+.formCard-boolGroup span {
+  margin-left: 8px; }
+
+.formCard-checklist {
+  margin-top: 32px; }
+
+.checklist-group {
+  display: flex;
+  margin-top: 16px;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 400px; }
+
+.checklist-group input {
+  flex: 0 1 36px; }
+
+.checklist-group span {
+  margin-left: 16px; }
+
+.checklist-group label {
+  flex: 0 1 150px; }
+
+.checklist-group select {
+  flex: 0 1 150px; }
+
+.formCard-hint {
+  color: lightgrey; }
