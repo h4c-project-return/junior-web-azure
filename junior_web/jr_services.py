@@ -11,6 +11,13 @@ import os
 SESSION_CREDENTIALS_KEY = "credentials"
 
 
+def envvar_or_default(key, default_value):
+    result = os.environ.get(key)
+    if not result:
+        result = default_value
+    return result
+
+
 def get_session_value(key):
     try:
         return session[key]
@@ -19,17 +26,9 @@ def get_session_value(key):
 
 
 def get_opportunities_sheet():
-    sheet_id = os.environ.get('JUNIOR_SHEET_ID')
-    if not sheet_id:
-        sheet_id = '1s_EC5hn-A-yKFUYWKO3RZ768AVW9FL-DKNZ3QBb0tls'
-
-    range_name = os.environ.get('JUNIOR_RANGE_NAME')
-    if not range_name:
-        range_name = 'Job Opportunities'
-
     return get_sheet_values(
-        sheet_id,
-        range_name,
+        envvar_or_default('JUNIOR_SHEET_ID', '1s_EC5hn-A-yKFUYWKO3RZ768AVW9FL-DKNZ3QBb0tls'),
+        envvar_or_default('JUNIOR_RANGE_NAME', 'Job Opportunities'),
         get_session_value(SESSION_CREDENTIALS_KEY))
 
 
@@ -62,7 +61,7 @@ def build_json_response_failure(exception, request_body, request_method, request
 
 
 app = Flask(__name__)
-app.secret_key = str(uuid.uuid4())
+app.secret_key = envvar_or_default('FLASK_SECRET_KEY', str(uuid.uuid4()))
 CORS(app)
 
 
