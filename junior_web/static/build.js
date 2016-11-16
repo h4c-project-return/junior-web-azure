@@ -26839,6 +26839,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var domain = void 0;
 
 if ("production" === 'development') domain = 'http://localhost:5555';else domain = 'http://project-return-junior-web1.azurewebsites.net';
+domain = '..';
 
 var paths = {
     opps: domain + '/opportunities',
@@ -26851,6 +26852,7 @@ function handleAPIException(err) {
 }
 
 function handleError(err) {
+    if (err.status === 401) location.href = "..";
     console.error(err);
 }
 

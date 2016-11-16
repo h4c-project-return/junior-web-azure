@@ -76,7 +76,7 @@ def root():
     if not auth_is_ready():
         return redirect(url_for('login'))
     else:
-        return "Authenticated!"
+        return redirect('static/index.html')
 
 
 @app.route('/login', methods=['GET'])
@@ -138,6 +138,13 @@ def api_opportunities_criteria():
         url_for('api_opportunities_criteria')))
     resp.headers['Content-Type'] = 'application/json'
     return resp
+
+
+@app.after_request
+def disable_caching(response):
+    response.headers['Cache-Control'] = 'public, max-age=0'
+    response.headers['Pragma'] = 'no-cache'
+    return response
 
 
 if __name__ == '__main__':
