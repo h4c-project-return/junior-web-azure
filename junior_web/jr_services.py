@@ -5,6 +5,7 @@ from google_sheets import get_sheet_values
 from opportunity_parsing import parse_opportunities, get_opportunities_criteria
 from opportunity_filtering import filter_opportunities
 import uuid
+import os
 
 
 SESSION_CREDENTIALS_KEY = "credentials"
@@ -18,9 +19,17 @@ def get_session_value(key):
 
 
 def get_opportunities_sheet():
+    sheet_id = os.environ.get('JUNIOR_SHEET_ID')
+    if not sheet_id:
+        sheet_id = '1s_EC5hn-A-yKFUYWKO3RZ768AVW9FL-DKNZ3QBb0tls'
+
+    range_name = os.environ.get('JUNIOR_RANGE_NAME')
+    if not range_name:
+        range_name = 'Job Opportunities'
+
     return get_sheet_values(
-        '1s_EC5hn-A-yKFUYWKO3RZ768AVW9FL-DKNZ3QBb0tls',
-        'Job Opportunities',
+        sheet_id,
+        range_name,
         get_session_value(SESSION_CREDENTIALS_KEY))
 
 
