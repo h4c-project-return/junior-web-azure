@@ -27243,10 +27243,10 @@ exports.default = {
 
             console.info(query);
 
-            query.partTimeOnly = query.availability;
-            query.hasDriversLicense = query.hasDriversLicense;
-            query.hasDriversLicense = query.driversLicense;
+            query.partTimeOnly = query.availability === "Yes";
+            query.hasDriversLicense = query.driversLicense === "Yes";
             delete query.availability;
+            delete query.driversLicense;
 
             this.$store.commit("SET_NAMES", query.name);
 

@@ -80,8 +80,9 @@ def root():
 
 @app.route('/login', methods=['GET'])
 def login():
-    context = build_auth_context(
-        "junior_web/client_secret.json",
+    context = build_auth_context_raw(
+        envvar_or_default('GOOGLE_CLIENT_ID', "410739525249-8e3sh05b5iefqkqijcp4c0mobddmph83.apps.googleusercontent.com"),
+        envvar_or_default('GOOGLE_CLIENT_SECRET', "kqyH-iHTfUFQYVMNjbYpXzeJ"),
         "https://www.googleapis.com/auth/spreadsheets.readonly",
         url_for('login', _external=True),
         "Project Return JR Web Layer")
