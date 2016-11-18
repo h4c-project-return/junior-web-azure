@@ -3,13 +3,11 @@ import datetime
 
 
 def is_conviction_match(criterion, convictionRestrictions, convictionThreshold):
-    cutoff_date = (
-        datetime.date(datetime.MINYEAR, 1, 1) if convictionThreshold == None
-        else (datetime.date.today() - datetime.timedelta(days=convictionThreshold * 365)))
-    approx_conv_date = datetime.date(criterion["year"], 7, 2)
-    return not any(map(
-        lambda r: r == criterion["type"] and cutoff_date < approx_conv_date,
-        convictionRestrictions))
+    maxConvictionYear = ((datetime.date.today().year - convictionThreshold)
+        if convictionThreshold else datetime.date.min.year)
+    return ((criterion["year"] <= maxConvictionYear) or
+        (criterion["type"] not in convictionRestrictions))
+
 
 
 def is_part_time_match(partTimeOnly, partTimeAvailable):
