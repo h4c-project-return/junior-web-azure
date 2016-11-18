@@ -1,1 +1,1 @@
-c:\tools\python2
+c:\tools\python27
