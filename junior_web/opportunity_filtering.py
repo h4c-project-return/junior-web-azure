@@ -3,9 +3,11 @@ import datetime
 
 
 def is_conviction_match(criterion, convictionRestrictions, convictionThreshold):
+    actualConvictionYear = (criterion["year"] if "year" in criterion
+        else datetime.date.today().year)
     maxConvictionYear = ((datetime.date.today().year - convictionThreshold)
         if convictionThreshold else datetime.date.min.year)
-    return ((criterion["year"] <= maxConvictionYear) or
+    return ((actualConvictionYear <= maxConvictionYear) or
         (criterion["type"] not in convictionRestrictions))
 
 
