@@ -6,6 +6,8 @@ from opportunity_parsing import parse_opportunities, get_opportunities_criteria
 from opportunity_filtering import filter_opportunities
 import uuid
 import os
+import jsonschema
+import werkzeug.exceptions
 
 
 SESSION_CREDENTIALS_KEY = "credentials"
@@ -36,8 +38,8 @@ def get_all_opportunities():
     return parse_opportunities(get_opportunities_sheet())
 
 
-def build_json_response_success(data, request_body, request_method, request_url):
-    return json.dumps({
+def make_json_response_success(data, request_body, request_method, request_url):
+    result = make_response(json.dumps({
         "data": data,
         "request": {
             "body": request_body,
@@ -45,11 +47,13 @@ def build_json_response_success(data, request_body, request_method, request_url)
             "url": request_url
         },
         "exception": None
-    })
+    }))
+    result.headers['Content-Type'] = 'application/json'
+    return result
 
 
-def build_json_response_failure(exception, request_body, request_method, request_url):
-    return json.dumps({
+def make_json_response_failure(status, exception, request_body, request_method, request_url):
+    result = make_response(json.dumps({
         "data": None,
         "request": {
             "body": request_body,
@@ -57,7 +61,42 @@ def build_json_response_failure(exception, request_body, request_method, request
             "url": request_url
         },
         "exception": exception
-    })
+    }), status)
+    result.headers['Content-Type'] = 'application/json'
+    return result
+
+
+def load_schema(schema_filename):
+    jr_services_path = os.path.realpath(os.path.dirname(__file__))
+    full_schema_filename = os.path.join(jr_services_path, "schema", schema_filename)
+    with open(full_schema_filename) as schema_file:
+        return json.load(schema_file)
+
+
+def format_json_path(path_elements):
+    return "/" + "/".join(map(lambda o: str(o), path_elements))
+
+
+def try_get_valid_request_json(request, schema_path):
+    schema = load_schema(schema_path)
+    try:
+        result = request.json
+        jsonschema.validate(result, schema)
+        return result, None
+    except werkzeug.exceptions.BadRequest as e:
+        return None, make_json_response_failure(
+            400,
+            { "message": "JSON parsing failed." },
+            request.data,
+            "POST",
+            url_for('api_opportunities_search'))
+    except jsonschema.ValidationError as e:
+        return None, make_json_response_failure(
+            400,
+            { "message": "JSON validation failed at {}: {}".format(format_json_path(e.path), e.message) },
+            request.data,
+            "POST",
+            url_for('api_opportunities_search'))
 
 
 app = Flask(__name__)
@@ -104,13 +143,11 @@ def require_auth():
 @app.route('/opportunities', methods=['GET'])
 def api_opportunities():
     require_auth()
-    resp = make_response(build_json_response_success(
+    return make_json_response_success(
         list(get_all_opportunities()),
         None,
         "GET",
-        url_for('api_opportunities')))
-    resp.headers['Content-Type'] = 'application/json'
-    return resp
+        url_for('api_opportunities'))
 
 
 @app.route('/opportunities/search', methods=['POST'])
@@ -119,25 +156,24 @@ def api_opportunities():
 # '_Heavy Lifting', 'capable with tools and machinery', 'Attention to Detail']}
 def api_opportunities_search():
     require_auth()
-    resp = make_response(build_json_response_success(
-        list(filter_opportunities(request.json, get_all_opportunities())),
-        request.data,
-        "POST",
-        url_for('api_opportunities_search')))
-    resp.headers['Content-Type'] = 'application/json'
-    return resp
+    request_json, json_error_response = (
+        try_get_valid_request_json(request, "opportunity/search.schema.json"))
+    return (json_error_response or
+        make_json_response_success(
+            list(filter_opportunities(request_json, get_all_opportunities())),
+            request.data,
+            "POST",
+            url_for('api_opportunities_search')))
 
 
 @app.route('/opportunities/criteria', methods=['GET'])
 def api_opportunities_criteria():
     require_auth()
-    resp = make_response(build_json_response_success(
+    return make_json_response_success(
         get_opportunities_criteria(get_opportunities_sheet()),
         None,
         "GET",
-        url_for('api_opportunities_criteria')))
-    resp.headers['Content-Type'] = 'application/json'
-    return resp
+        url_for('api_opportunities_criteria'))
 
 
 @app.after_request

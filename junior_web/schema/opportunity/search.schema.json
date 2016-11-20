@@ -1,0 +1,63 @@
+{
+  "$schema":"http://json-schema.org/draft-04/schema#",
+  "id": "http://projectreturninc.org/schema/junior-web-opportunity-search.v1.0.schema.json",
+  "title":"Project Return Junior Web Opportunity Search",
+
+  "type":"object",
+  "properties":{
+
+    "convictions":{
+      "type":"array",
+      "items":{
+        "type":"object",
+        "properties":{
+          "type":{
+            "type":"string",
+            "minLength":1
+          },
+          "year":{
+            "type":"integer",
+            "minimum":1900,
+            "maximum":2100
+          }
+        },
+        "required":["type"],
+        "additionalProperties":false
+      },
+      "uniqueItems":true
+    },
+
+    "abilities":{
+      "type":"array",
+      "items":{
+        "type":"string",
+        "minLength":1
+      },
+      "minItems":1,
+      "uniqueItems":true
+    },
+
+    "hasDriversLicense":{
+      "type":"boolean"
+    },
+
+    "partTimeOnly":{
+      "type":"boolean"
+    },
+
+    "industries":{
+      "type":"array",
+      "items":{
+        "type":"string",
+        "minLength":1
+      },
+      "minItems":1,
+      "uniqueItems":true
+    },
+
+    "name":{"type":"object"}
+  },
+
+  "required":["convictions", "abilities", "hasDriversLicense", "partTimeOnly", "industries"],
+  "additionalProperties":false
+}
