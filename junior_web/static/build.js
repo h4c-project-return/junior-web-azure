@@ -28008,7 +28008,7 @@ exports.default = {
         state.query.name.pLast = lastName;
     },
     SET_QUERY_CONVICTIONS: function SET_QUERY_CONVICTIONS(state, convictions) {
-        state.query.convictions = convictions;
+        state.query.convictions = convictions.map(function(conviction) { return { "type": conviction["conviction"], "year": conviction["year"] }; });
     },
     SET_HAS_LICENSE: function SET_HAS_LICENSE(state, hasLicense) {
         state.query.hasDriversLicense = hasLicense;
