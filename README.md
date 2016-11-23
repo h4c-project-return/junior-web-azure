@@ -102,7 +102,7 @@ The Junior web application is currently hosted on Azure, using nonprofit grant c
 However, it should be noted that Python support on Azure still seems somewhat immature. The base hosting setup in use at time of writing was derived from the [PTVS team's Flask hosting instructions](https://docs.microsoft.com/en-us/azure/app-service-web/web-sites-python-create-deploy-flask-app) and [artifacts](https://github.com/azureappserviceoss/FlaskAzure). This appears to be a work in process, with improvements and alternatives being discussed regularly on various blog posts.
 
 ### Deployment
-Notiwthstand the above, setting up Azure to host this application is fairly straightforward:
+Notwithstand the preceeding, setting up Azure to host this application is fairly straightforward:
 
 1. Create new App Service.
    1. Search for and select the "Flask" option from PTVS.
