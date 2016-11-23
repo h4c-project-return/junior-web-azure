@@ -9,10 +9,22 @@ At the 2016 [Hack for the Community](http://hackforthecommunity.com/) event, rep
 
 This document describes the following major components of this web app:
 
-1. Spreadsheet (in brief - above)
-2. UI Layer
-3. API/Service Layer
-4. Hosting
+1. [Spreadsheet](#spreadsheet)
+2. [UI Layer](#ui-layer)
+3. [API/Service Layer](#api/service-layer)
+4. [Hosting](#hosting)
+
+## Spreadsheet
+The Junior spreadsheet contains a tab named "Job Opportunities", which lists the current opportunities available to qualifying participants. Several columns are of specific importance to this web app, namely:
+
+* "Company Name": The name of the employer offering the opportunity (and possibly the job title). (Text)
+* "Conviction Restrictions": A column group (merged header cell over several columns); each column has a sub-header naming a conviction that may or may not prevent a participant from qualifying for the given job. (TRUE/FALSE)
+* "Conviction Threshold (Yrs)": The number of years after which the Conviction Restrictions no longer apply to the given job. (Number)
+* "Part Time / Full Time": The work schedule for the opportunity. If the cell includes "PT", the given job will be treated as having a part-time option available. (Text, possibly containing 'PT')
+* "Industry": The name of the industry the employer operates in. (Text)
+* "Type": Distinguishes various placement arrangements between Project Return and the employer. (Text)
+* "Required Abilities": A column group (merged header cell over several columns); each column has a sub-header naming some ability that may or may not be required for work in the given job. (TRUE/FALSE)
+* "Requires Driver's License": Whether a participant must have a license in order to qualify for the given job. (TRUE/FALSE)
 
 ## UI Layer
 
