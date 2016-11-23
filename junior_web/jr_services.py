@@ -4,20 +4,12 @@ from google_authorization import *
 from google_sheets import get_sheet_values
 from opportunity_parsing import parse_opportunities, get_opportunities_criteria
 from opportunity_filtering import filter_opportunities
-import uuid
-import os
 import jsonschema
 import werkzeug.exceptions
+import jr_config
 
 
 SESSION_CREDENTIALS_KEY = "credentials"
-
-
-def envvar_or_default(key, default_value):
-    result = os.environ.get(key)
-    if not result:
-        result = default_value
-    return result
 
 
 def get_session_value(key):
@@ -29,8 +21,8 @@ def get_session_value(key):
 
 def get_opportunities_sheet():
     return get_sheet_values(
-        envvar_or_default('JUNIOR_SHEET_ID', '1s_EC5hn-A-yKFUYWKO3RZ768AVW9FL-DKNZ3QBb0tls'),
-        envvar_or_default('JUNIOR_RANGE_NAME', 'Job Opportunities'),
+        jr_config.google.sheet.id,
+        jr_config.google.sheet.range_name,
         get_session_value(SESSION_CREDENTIALS_KEY))
 
 
@@ -100,7 +92,7 @@ def try_get_valid_request_json(request, schema_path):
 
 
 app = Flask(__name__)
-app.secret_key = envvar_or_default('FLASK_SECRET_KEY', str(uuid.uuid4()))
+app.secret_key = jr_config.flask.secret_key
 CORS(app)
 
 
@@ -120,8 +112,8 @@ def root():
 @app.route('/login', methods=['GET'])
 def login():
     context = build_auth_context_raw(
-        envvar_or_default('GOOGLE_CLIENT_ID', "410739525249-8e3sh05b5iefqkqijcp4c0mobddmph83.apps.googleusercontent.com"),
-        envvar_or_default('GOOGLE_CLIENT_SECRET', "kqyH-iHTfUFQYVMNjbYpXzeJ"),
+        jr_config.google.oauth.client_id,
+        jr_config.google.oauth.client_secret,
         "https://www.googleapis.com/auth/spreadsheets.readonly",
         url_for('login', _external=True),
         "Project Return JR Web Layer")
