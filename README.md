@@ -39,8 +39,8 @@ It is important to note that without both those elements (client app credentials
 
 #### Authorization Setup
 1. Create client application credentials. (See Google API's [Using OAuth 2.0 for Web Server Applications](https://developers.google.com/identity/protocols/OAuth2WebServer).)
-2. Grant the application access to Sheets app.
-3. Tell Google the app's login URL (http://[app_domain].azurewebsites.net/login).
+   * Add the app's login URL (http://[app_domain].azurewebsites.net/login) as an "Authorized redirect URI".
+2. Make sure the Sheets API is enabled.
 
 ## UI Layer
 This is a client-side Single-Page Web application built in HTML/JS/CSS, using the [Vue framework](https://vuejs.org/). The source code for this layer is maintained in this repository's sibling named "[project-return-client](https://github.com/h4c-project-return/project-return-client)". The build output from that codebase is then checked into this repository at the following path for inclusion in the Azure deployment: [/junior_web/static](https://github.com/h4c-project-return/junior-web-azure/tree/master/junior_web/static)
