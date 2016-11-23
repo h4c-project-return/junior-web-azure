@@ -124,3 +124,13 @@ Under Application Settings, configure the following name-value-pair App Settings
    * `GOOGLE_OAUTH_CLIENT_SECRET`: Client Secret from Google Apps OAuth configuration
    * `GOOGLE_SHEET_ID`: Sheet Id from Google Sheets
    * `GOOGLE_SHEET_RANGE_NAME`: The name of the Job Opportunities spreadsheet tab
+
+### Troubleshooting
+An ongoing frustration with this hosting setup is that it is not yet apparent how to get straightforward error logging from Flask out into the Azure environment. This stems from the fact that Flask logs to STDOUT by default, but CGI/WSGI co-opt STDOUT for the HTTP response itself.
+
+However, runtime errors experienced to-date boil down to a very short list of causes:
+ 
+1. Invalid configuration. (See above.)
+2. Insufficient end-user authorization. (Must be able to view the Google Sheets spreadsheet directly.)
+
+Beyond these, most issues are better reproduced locally, where Flask can output errors to STDOUT.
