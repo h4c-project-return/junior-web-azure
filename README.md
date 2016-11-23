@@ -11,7 +11,7 @@ This document describes the following major components of this web app:
 
 1. [Spreadsheet](#spreadsheet)
 2. [UI Layer](#ui-layer)
-3. [API/Service Layer](#api/service-layer)
+3. [API/Service Layer](#apiservice-layer)
 4. [Hosting](#hosting)
 
 ## Spreadsheet
@@ -27,7 +27,9 @@ The Junior spreadsheet contains a tab named "Job Opportunities", which lists the
 * "Requires Driver's License": Whether a participant must have a license in order to qualify for the given job. (TRUE/FALSE)
 
 ## UI Layer
-
+This is a client-side Single-Page Web application built in HTML/JS/CSS, using the [Vue framework](https://vuejs.org/). The source code for this layer is maintained in this repository's sibling named "[project-return-client](https://github.com/h4c-project-return/project-return-client)". The build output from that codebase is then checked into this repository at the following path for inclusion in the Azure deployment: [/junior_web/static](https://github.com/h4c-project-return/junior-web-azure/tree/master/junior_web/static)
+  
+Detailed documentation on working within and building the UI Layer's codebase are pending.
 
 ## API/Service Layer
 
