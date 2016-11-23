@@ -15,7 +15,10 @@ This document describes the following major components of this web app:
 4. [Hosting](#hosting)
 
 ## Spreadsheet
-The Junior spreadsheet contains a tab named "Job Opportunities", which lists the current opportunities available to qualifying participants. Several columns are of specific importance to this web app, namely:
+The Junior spreadsheet contains a tab named "Job Opportunities", which lists the current opportunities available to qualifying participants.
+
+### Significant Columns
+Several columns in the "Job Opportunities" tab are of specific importance to this web app, namely:
 
 * "Company Name": The name of the employer offering the opportunity (and possibly the job title). (Text)
 * "Conviction Restrictions": A column group (merged header cell over several columns); each column has a sub-header naming a conviction that may or may not prevent a participant from qualifying for the given job. (TRUE/FALSE)
