@@ -18,7 +18,12 @@ This document describes the following major components of this web app:
 The Junior spreadsheet contains a tab named "Job Opportunities", which lists the current opportunities available to qualifying participants.
 
 ### Significant Columns
-Several columns in the "Job Opportunities" tab are of specific importance to this web app, namely:
+Several columns in the "Job Opportunities" tab are of specific importance to this web app.
+
+Company Name | Conviction Restrictions |     | Conviction Threshold (Yrs) | Part Time / Full Time | Industry | Type | Required Abilities |     | Requires Driver's License
+------------ | ----------------------- | --- | -------------------------- | --------------------- | -------- | ---- | ------------------ | --- | -------------------------
+ | **_Violence_** | **_Drugs_** | | | | | **_Lifting_** | **_Caregiving_** |                     
+Acme, Inc. - Assembly Operator | TRUE | FALSE | 5 | FT/PT | Manufacturing | Referral Partner | TRUE | FALSE | FALSE
 
 * "Company Name": The name of the employer offering the opportunity (and possibly the job title). (Text)
 * "Conviction Restrictions": A column group (merged header cell over several columns); each column has a sub-header naming a conviction that may or may not prevent a participant from qualifying for the given job. (TRUE/FALSE)
@@ -28,6 +33,8 @@ Several columns in the "Job Opportunities" tab are of specific importance to thi
 * "Type": Distinguishes various placement arrangements between Project Return and the employer. (Text)
 * "Required Abilities": A column group (merged header cell over several columns); each column has a sub-header naming some ability that may or may not be required for work in the given job. (TRUE/FALSE)
 * "Requires Driver's License": Whether a participant must have a license in order to qualify for the given job. (TRUE/FALSE)
+
+Note: Additional columns are allowed, and will be displayed on the app's opportunity detail screen.
 
 ### Authorization
 The app uses the Google Apps API's OAuth capability to secure access to Project Return's proprietary job opportunity data. Access to the spreadsheet is secured at two levels:
@@ -48,7 +55,7 @@ This is a client-side Single-Page Web application built in HTML/JS/CSS, using th
 Detailed documentation on working within and building the UI Layer's codebase are pending.
 
 ## API/Service Layer
-This is a Python/Flask-based web application that provides a Rest-style web API, along with serving the static SPA artifacts from the UI Layer ([above](#ui-layer)). The API/Service Layer is responsible for facilitating authorization of access to the [Spreadsheet](#spreadsheet), then reading the spreadsheet data and executing queries against it based on user-input search criteria (from the [UI Layer](#ui-layer).
+This is a [Python](https://www.python.org/) & [Flask](http://flask.pocoo.org/)-based web application that provides a Rest-style web API, along with serving the static SPA artifacts from the UI Layer ([above](#ui-layer)). The API/Service Layer is responsible for facilitating authorization of access to the [Spreadsheet](#spreadsheet), then reading the spreadsheet data and executing queries against it based on user-input search criteria (from the [UI Layer](#ui-layer).
 
 ### Code Structure
 The major elements of the codebase are as follows:
@@ -94,7 +101,7 @@ The major elements of the codebase are as follows:
    
 
 ## Hosting
-The Junior web application is currently hosted on Azure, using nonprofit grant credits donated by Microsoft in conjunction with the Hack for the Community event. Azure offers several advantages over other options considered, including:
+The Junior web application is currently hosted on the [Azure](https://azure.microsoft.com/) cloud, using nonprofit grant credits donated by Microsoft in conjunction with the Hack for the Community event. In the original development context, Azure offered several advantages over other options considered, including:
 * PaaS (no VM management required)
 * Free subdomain (no DNS maintenance required)
 * Automated deployment upon GitHub commit
