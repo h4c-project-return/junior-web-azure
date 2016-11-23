@@ -1,12 +1,43 @@
+h1, h2, h3, h4, h5, h6, b {
+  color: #333366; }
+
+h1 {
+  font-size: 42px; }
+
+h2 {
+  font-size: 36px; }
+
 h3 {
   font-size: 30px; }
+
+h4 {
+  font-size: 26px; }
+
+h5 {
+  font-size: 22px; }
+
+h6 {
+  font-size: 18px; }
+
+p {
+  margin-bottom: 1rem;
+  line-height: 1.2; }
+
+p.large {
+  font-size: 20px; }
 
 * {
   box-sizing: border-box; }
 
 html, body {
   background-color: #333366;
-  font-family: "Open Sans", sans-serif; }
+  font-family: "Open Sans", sans-serif;
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0; }
 
 .btn {
   margin-top: 32px;
@@ -38,11 +69,9 @@ html, body {
 .formCard {
   background-color: white;
   border-radius: 5px;
-  margin-left: auto;
-  margin-right: auto;
+  margin: 32px auto 64px;
   padding: 36px 72px 128px;
   max-width: 800px;
-  margin-top: 32px;
   min-height: 500px;
   position: relative; }
 
@@ -82,7 +111,7 @@ html, body {
   margin-left: auto;
   margin-right: auto;
   max-width: 400px;
-  align-items: baseline; }
+  align-items: center; }
 
 .checklistGroup--left {
   margin: 16px 0 0 0; }
